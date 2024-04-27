@@ -1,0 +1,39 @@
+4.2
+SELECT pembelian.id, pembelian.tanggal, pembelian.nomor, pembelian.jumlah, pembelian.harga, produk.nama AS nama_produk, vendor.nama AS nama_vendor, vendor.kontak
+    -> FROM pembelian
+    -> JOIN produk ON pembelian.produk_id = produk.id
+    -> JOIN vendor ON pembelian.vendor_id = vendor.id;
++----+------------+-------+--------+---------+-------------------+----------------------+-----------------+
+| id | tanggal    | nomor | jumlah | harga   | nama_produk       | nama_vendor          | kontak          |
++----+------------+-------+--------+---------+-------------------+----------------------+-----------------+
+|  1 | 2019-10-10 | P001  |      2 | 3500000 | Televisi 21 inchs | PT Guna Samudra      | Ali Nurdin      |
+|  2 | 2019-11-20 | P002  |      5 | 5500000 | Televisi 40 inch  | PT Pondok C9         | Putri Ramadhani |
+|  3 | 2019-12-12 | P003  |      5 | 5400000 | Televisi 40 inch  | PT Guna Samudra      | Ali Nurdin      |
+|  4 | 2020-01-20 | P004  |    200 |    1800 | Teh Botol         | CV Jaya Raya Semesta | Dwi Rahayu      |
+|  5 | 2020-01-20 | P005  |    100 |    2300 | Teh Kotak         | CV Jaya Raya Semesta | Dwi Rahayu      |
++----+------------+-------+--------+---------+-------------------+----------------------+-----------------+
+5 rows in set (0.001 sec)
+
+4.3
+
+-> START TRANSACTION;
+-> INSERT INTO produk (nama, stok, kode, jenis_produk_id
+    -> )
+    ->      VALUES ('Produk A',100, 'P001', 1),
+    ->      ('Produk B', 200, 'P002', 2),
+    ->      ('Produk C', 300, 'P003', 3);
+-> SELECT * FROM produk;
+-> SAVEPOINT savepoint_produk;
+-> DELETE FROM pembayaran WHERE id = 1;
+-> SELECT * FROM pembayaran WHERE id = 1;
+-> ROLLBACK TO SAVEPOINT savepoint_produk;
+-> COMMIT;
+
+Saat ingin mencegah akses tulis ke tabel-tabel tertentu dalam database. 
+Seperti saat ingin melakukan pembacaan data dari tabel-tabel tersebut tanpa khawatir terjadi perubahan data 
+secara konkuren.
+
+
+Saat perlu melakukan operasi tulis yang melibatkan satu atau beberapa tabel di dalam database, 
+dan ingin mencegah akses pembacaan dan penulisan konkuren ke tabel-tabel tersebut selama 
+operasi tulis sedang berlangsung.
